@@ -1,6 +1,8 @@
 <?php
+ob_start();
 require "main/init.php";
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,38 +29,3 @@ require "main/init.php";
         </div>
     </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
