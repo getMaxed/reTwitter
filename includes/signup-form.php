@@ -5,7 +5,7 @@
             <legend><h4>Sign Up</h4></legend>
             <div>
                 <label for="name"></label>
-                <input type="text" name="screenName" placeholder="Full Name">
+                <input type="text" name="screen_name" placeholder="Full Name">
             </div>
             <br>
             <div>
