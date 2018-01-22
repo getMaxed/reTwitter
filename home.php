@@ -2,7 +2,7 @@
 require "main/init.php";
 $user_id = $_SESSION['user_id'];
 $user = $getFromUser->userData($user_id);
-$getFromUser->update('users', $user_id, array('email' => 'new44322@asdf.fd'));
+
 ?>
 
 <!DOCTYPE HTML>

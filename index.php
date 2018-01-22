@@ -1,6 +1,9 @@
 <?php
 ob_start();
 require "main/init.php";
+if (isset($_SESSION['user_id'])) {
+    header('Location: home.php');
+}
 ?>
 
 

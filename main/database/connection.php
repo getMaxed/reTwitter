@@ -1,10 +1,9 @@
 <?php
-$dsn = 'mysql:host=localhost;dbname=retwitter';
-$user = 'root';
-$password = '';
+
+require 'config.php';
 
 try {
-    $pdo = new PDO($dsn, $user, $password);
+    $pdo = new PDO(DSN, USER, PASSWORD);
 } catch (PDOException $e) {
     echo 'Connection error! ' . $e->getMessage();
 }
