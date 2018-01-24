@@ -1,30 +1,31 @@
 <?php
 
-if (isset($_GET['username']) === true && empty($_GET['username']) === false) {
-    include 'main/init.php';
-    $username = $getFromUser->checkInput($_GET['username']);
-    $profileId = $getFromUser->userIdByUsername($username);
-    $profileData = $getFromUser->userData($profileId);
-    $user_id = $_SESSION['user_id'];
-    $user = $getFromUser->userData($user_id);
+    if (isset($_GET['username']) === true && empty($_GET['username']) === false) {
+        include 'core/init.php';
+        $username = $getFromU->checkInput($_GET['username']);
+        $profileId = $getFromU->userIdByUsername($username);
+        $profileData = $getFromU->userData($profileId);
+        $user_id = $_SESSION['user_id'];
+        $user = $getFromU->userData($user_id);
 
-    if (!$profileData) {
-        header('Location: index.php');
+        if (!$profileData) {
+            header('Location: index.php');
+        }
+
     }
-}
-?>
 
+?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>reTwitter</title>
+    <title>twitter</title>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="assets/css/styles.css"/>
+    <link rel="stylesheet" href="<?=BASE_URL?>assets/css/style-complete.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css"/>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
 </head>
-
+<!--Helvetica Neue-->
 <body>
 <div class="wrapper">
     <!-- header wrapper -->
@@ -38,7 +39,7 @@ if (isset($_GET['username']) === true && empty($_GET['username']) === false) {
                         <li><i class="fa fa-envelope" aria-hidden="true"></i>Messages</li>
 
                     </ul>
-                </div>
+                </div><!-- nav left ends-->
                 <div class="nav-right">
                     <ul>
                         <li><input type="text" placeholder="Search" class="search"/><i class="fa fa-search" aria-hidden="true"></i>
@@ -46,31 +47,31 @@ if (isset($_GET['username']) === true && empty($_GET['username']) === false) {
                             </div>
                         </li>
 
-                        <li class="hover"><label class="drop-label" for="drop-wrap1"><img src="<?=BASE_URL.$user->profile_image;?>"/></label>
+                        <li class="hover"><label class="drop-label" for="drop-wrap1"><img src="<?=BASE_URL.$user->profileImage?>"/></label>
                             <input type="checkbox" id="drop-wrap1">
                             <div class="drop-wrap">
                                 <div class="drop-inner">
                                     <ul>
-                                        <li><a href="<?=BASE_URL.$user->username;?>"><?=$user->username;?></a></li>
-                                        <li><a href="<?=BASE_URL;?>settings/account">Settings</a></li>
-                                        <li><a href="<?=BASE_URL;?>includes/logout.php">Log out</a></li>
+                                        <li><a href="<?=BASE_URL.$user->username?>"><?=$user->username?></a></li>
+                                        <li><a href="<?=BASE_URL?>settings/account">Settings</a></li>
+                                        <li><a href="<?=BASE_URL?>includes/logout.php">Log out</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </li>
                         <li><label for="pop-up-tweet" class="addTweetBtn">Tweet</label></li>
                     </ul>
-                </div
+                </div><!-- nav right ends-->
 
-            </div>
-        </div>
-    </div>
+            </div><!-- nav ends -->
+        </div><!-- nav container ends -->
+    </div><!-- header wrapper end -->
     <!--Profile cover-->
     <div class="profile-cover-wrap">
         <div class="profile-cover-inner">
             <div class="profile-cover-img">
                 <!-- PROFILE-COVER -->
-                <img src="<?=BASE_URL.$profileData->profile_cover;?>"/>
+                <img src="<?=BASE_URL.$profileData->profileCover?>"/>
             </div>
         </div>
         <div class="profile-nav">
@@ -85,22 +86,22 @@ if (isset($_GET['username']) === true && empty($_GET['username']) === false) {
                         </div>
                     </li>
                     <li>
-                        <a href="<?=BASE_URL.$profileData->username;?>/following">
+                        <a href="<?=BASE_URL.$profileData->username?>/following">
                             <div class="n-head">
-                                <a href="<?=BASE_URL.$profileData->username;?>/following">FOLLOWING</a>
+                                <a href="<?=BASE_URL.$profileData->username?>/following">FOLLOWING</a>
                             </div>
                             <div class="n-bottom">
-                                <span class="count-following"><?=$profileData->following;?></span>
+                                <span class="count-following"><?=$profileData->following?></span>
                             </div>
                         </a>
                     </li>
                     <li>
-                        <a href="<?=BASE_URL.$profileData->username;?>/followers">
+                        <a href="<?=BASE_URL.$profileData->username?>/followers">
                             <div class="n-head">
                                 FOLLOWERS
                             </div>
                             <div class="n-bottom">
-                                <span class="count-followers"><?=$profileData->followers;?></span>
+                                <span class="count-followers"><?=$profileData->followers?></span>
                             </div>
                         </a>
                     </li>
@@ -122,59 +123,60 @@ if (isset($_GET['username']) === true && empty($_GET['username']) === false) {
                 </div>
             </div>
         </div>
-    </div>
+    </div><!--Profile Cover End-->
 
     <!---Inner wrapper-->
     <div class="in-wrapper">
         <div class="in-full-wrap">
             <div class="in-left">
                 <div class="in-left-wrap">
-
+                    <!--PROFILE INFO WRAPPER END-->
                     <div class="profile-info-wrap">
                         <div class="profile-info-inner">
                             <!-- PROFILE-IMAGE -->
                             <div class="profile-img">
-                                <img src="<?=BASE_URL.$profileData->profile_image;?>"/>
+                                <img src="<?=BASE_URL.$profileData->profileImage?>"/>
                             </div>
 
                             <div class="profile-name-wrap">
                                 <div class="profile-name">
-                                    <a href="<?=BASE_URL.$profileData->profile_cover;?>"><?=$profileData->screen_name;?></a>
+                                    <a href="<?=BASE_URL.$profileData->profileCover?>"><?=$profileData->screenName?></a>
                                 </div>
                                 <div class="profile-tname">
-                                    @<span class="username"><?=$profileData->username;?></span>
+                                    @<span class="username"><?=$profileData->username?></span>
                                 </div>
                             </div>
 
                             <div class="profile-bio-wrap">
                                 <div class="profile-bio-inner">
-                                    <?=$profileData->bio;?>
+                                    <?=$profileData->bio?>
                                 </div>
                             </div>
 
                             <div class="profile-extra-info">
                                 <div class="profile-extra-inner">
                                     <ul>
-                                    <?php if (!empty($profileData->country)) { ?>
                                         <li>
+                                        <?php if (!empty($profileData->country)):?>
                                             <div class="profile-ex-location-i">
                                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
                                             </div>
                                             <div class="profile-ex-location">
-                                                <?=$profileData->country;?>
+                                                <?=$profileData->country?>
                                             </div>
                                         </li>
-                                    <?php }?>
-                                    <?php if (!empty($profileData->website)) { ?>
+                                        <?php endif;?>
+
+                                        <?php if (!empty($profileData->website)):?>
                                         <li>
                                             <div class="profile-ex-location-i">
                                                 <i class="fa fa-link" aria-hidden="true"></i>
                                             </div>
                                             <div class="profile-ex-location">
-                                                <a href="<?=$profileData->website;?>" target="_blank"><?=$profileData->website;?></a>
+                                                <a href="<?=$profileData->website?>" target="_blank"><?=$profileData->website?></a>
                                             </div>
                                         </li>
-                                    <?php }?>
+                                        <?php endif;?>
 
                                         <li>
                                             <div class="profile-ex-location-i">
@@ -211,30 +213,53 @@ if (isset($_GET['username']) === true && empty($_GET['username']) === false) {
                                 </div>
                                 <div class="profile-extra-footer-body">
                                     <ul>
-
+                                        <!-- <li><img src="#"/></li> -->
                                     </ul>
                                 </div>
                             </div>
+
                         </div>
+                        <!--PROFILE INFO INNER END-->
+
                     </div>
-                </div>
-            </div>
-            <div class="in-center">
-                <div class="in-center-wrap">
+                    <!--PROFILE INFO WRAPPER END-->
 
                 </div>
+                <!-- in left wrap-->
+
+            </div>
+            <!-- in left end-->
+
+            <div class="in-center">
+                <div class="in-center-wrap">
+                    <!--Tweet SHOW WRAPER-->
+                    <!--Tweet SHOW WRAPER END-->
+                </div><!-- in left wrap-->
                 <div class="popupTweet"></div>
             </div>
+            <!-- in center end -->
 
             <div class="in-right">
                 <div class="in-right-wrap">
 
-                </div>
+                    <!--==WHO TO FOLLOW==-->
+                    <!--who to follow-->
+                    <!--==WHO TO FOLLOW==-->
+
+                    <!--==TRENDS==-->
+                    <!--Trends-->
+                    <!--==TRENDS==-->
+
+                </div><!-- in right wrap-->
             </div>
+            <!-- in right end -->
 
         </div>
+        <!--in full wrap end-->
     </div>
+    <!-- in wrappper ends-->
 </div>
+<!-- ends wrapper -->
 </body>
 </html>
 

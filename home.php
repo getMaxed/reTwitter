@@ -1,17 +1,19 @@
 <?php
-require "main/init.php";
-$user_id = $_SESSION['user_id'];
-$user = $getFromUser->userData($user_id);
-
+    include 'core/init.php';
+    $user_id = $_SESSION['user_id'];
+    $user = $getFromU->userData($user_id);
+    if ($getFromU->loggedIn() === false) {
+        header('Location: index.php');
+    }
 ?>
 
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Tweety</title>
+    <title>reTwitter</title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css"/>
-    <link rel="stylesheet" href="assets/css/styles.css"/>
+    <link rel="stylesheet" href="assets/css/style-complete.css"/>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 </head>
 <!--Helvetica Neue-->
@@ -19,16 +21,18 @@ $user = $getFromUser->userData($user_id);
 <div class="wrapper">
     <!-- header wrapper -->
     <div class="header-wrapper">
+
         <div class="nav-container">
             <!-- Nav -->
             <div class="nav">
+
                 <div class="nav-left">
                     <ul>
                         <li><a href="#"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
                         <li><a href="i/notifications"><i class="fa fa-bell" aria-hidden="true"></i>Notification</a></li>
                         <li><i class="fa fa-envelope" aria-hidden="true"></i>Messages</li>
                     </ul>
-                </div>
+                </div><!-- nav left ends-->
 
                 <div class="nav-right">
                     <ul>
@@ -39,7 +43,7 @@ $user = $getFromUser->userData($user_id);
                             </div>
                         </li>
 
-                        <li class="hover"><label class="drop-label" for="drop-wrap1"><img src="<?=$user->profile_image;?>"/></label>
+                        <li class="hover"><label class="drop-label" for="drop-wrap1"><img src="<?=$user->profileImage;?>"/></label>
                             <input type="checkbox" id="drop-wrap1">
                             <div class="drop-wrap">
                                 <div class="drop-inner">
@@ -53,13 +57,13 @@ $user = $getFromUser->userData($user_id);
                         </li>
                         <li><label class="addTweetBtn">Tweet</label></li>
                     </ul>
-                </div>
+                </div><!-- nav right ends-->
 
-            </div>
+            </div><!-- nav ends -->
 
-        </div>
+        </div><!-- nav container ends -->
 
-    </div>
+    </div><!-- header wrapper end -->
 
     <!---Inner wrapper-->
     <div class="inner-wrapper">
@@ -71,22 +75,22 @@ $user = $getFromUser->userData($user_id);
                             <div class="info-inner">
                                 <div class="info-in-head">
                                     <!-- PROFILE-COVER-IMAGE -->
-                                    <img src="<?=$user->profile_cover;?>"/>
-                                </div>
+                                    <img src="<?=$user->profileCover;?>"/>
+                                </div><!-- info in head end -->
                                 <div class="info-in-body">
                                     <div class="in-b-box">
                                         <div class="in-b-img">
                                             <!-- PROFILE-IMAGE -->
-                                            <img src="<?=$user->profile_image;?>"/>
+                                            <img src="<?=$user->profileImage;?>"/>
                                         </div>
-                                    </div>
+                                    </div><!--  in b box end-->
                                     <div class="info-body-name">
                                         <div class="in-b-name">
-                                            <div><a href="<?=$user->username;?>"><?=$user->screen_name;?></a></div>
+                                            <div><a href="<?=$user->username;?>"><?=$user->screenName;?></a></div>
                                             <span><small><a href="<?=$user->username;?>">@<?=$user->username;?></a></small></span>
-                                        </div>
-                                    </div>
-                                </div>
+                                        </div><!-- in b name end-->
+                                    </div><!-- info body name end-->
+                                </div><!-- info in body end-->
                                 <div class="info-in-footer">
                                     <div class="number-wrapper">
                                         <div class="num-box">
@@ -113,13 +117,17 @@ $user = $getFromUser->userData($user_id);
                                                 <span class="count-followers"><?=$user->followers;?></span>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                    </div><!-- mumber wrapper-->
+                                </div><!-- info in footer -->
+                            </div><!-- info inner end -->
+                        </div><!-- info box end-->
 
-                    </div>
-                </div>
+                        <!--==TRENDS==-->
+                        <!---TRENDS HERE-->
+                        <!--==TRENDS==-->
+
+                    </div><!-- in left wrap-->
+                </div><!-- in left end-->
                 <div class="in-center">
                     <div class="in-center-wrap">
                         <!--TWEET WRAPPER-->
@@ -128,7 +136,7 @@ $user = $getFromUser->userData($user_id);
                                 <div class="tweet-h-left">
                                     <div class="tweet-h-img">
                                         <!-- PROFILE-IMAGE -->
-                                        <img src="<?=$user->profile_image;?>"/>
+                                        <img src="<?=$user->profileImage;?>"/>
                                     </div>
                                 </div>
                                 <div class="tweet-body">
@@ -155,64 +163,40 @@ $user = $getFromUser->userData($user_id);
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div><!--TWEET WRAP END-->
+
 
                         <!--Tweet SHOW WRAPPER-->
                         <div class="tweets">
-
+                            <!--TWEETS HERE-->
                         </div>
+                        <!--TWEETS SHOW WRAPPER-->
 
                         <div class="loading-div">
                             <img id="loader" src="assets/images/loading.svg" style="display: none;"/>
                         </div>
                         <div class="popupTweet"></div>
+                        <!--Tweet END WRAPER-->
 
-
-                    </div>
-                </div>
+                    </div><!-- in left wrap-->
+                </div><!-- in center end -->
 
                 <div class="in-right">
                     <div class="in-right-wrap">
-                    </div>
 
-                </div>
+                        <!--Who To Follow-->
+                        <!--WHO_TO_FOLLOW HERE-->
+                        <!--Who To Follow-->
 
-            </div>
+                    </div><!-- in left wrap-->
 
-        </div>
-    </div>
-</div>
+                </div><!-- in right end -->
+
+            </div><!--in full wrap end-->
+
+        </div><!-- in wrappper ends-->
+    </div><!-- inner wrapper ends-->
+</div><!-- ends wrapper -->
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,97 +1,59 @@
 <?php
-
     if (isset($_POST['signup'])) {
-        $screen_name = $_POST['screen_name'];
+        $screenName = $_POST['screenName'];
         $password = $_POST['password'];
         $email = $_POST['email'];
         $error = '';
 
-        if (empty($screen_name) or empty($password) or empty($email)) {
+        if (empty($screenName) or empty($password) or empty($email)) {
             $error = 'All fields are required';
         } else {
-            $email = $getFromUser->checkInput($email);
-            $screen_name = $getFromUser->checkInput($screen_name);
-            $password = $getFromUser->checkInput($password);
+            $email = $getFromU->checkInput($email);
+            $screenName = $getFromU->checkInput($screenName);
+            $password = $getFromU->checkInput($password);
 
             if (!filter_var($email)) {
-                $error = 'Invalid email format';
-            } elseif (strlen($screen_name) > 20) {
+                $error = 'Invalid Email format';
+            } elseif (strlen($screenName) > 20) {
                 $error = 'Name must be between 6-20 characters';
             } elseif (strlen($password) < 5) {
                 $error = 'Password is too short';
             } else {
-                if ($getFromUser->checkEmail($email) === true) {
+                if ($getFromU->checkEmail($email) === true) {
                     $error = 'Email is already in use';
                 } else {
-                    $user_id = $getFromUser->create('users', array('email' => $email, 'password' => md5($password), 'screen_name' => $screen_name, 'profile_image' => 'assets/images/defaultProfileImage.png', 'profile_cover' => 'assets/images/defaultCoverImage.png'));
+                    $user_id = $getFromU->create('users', array('email' => $email, 'password' => md5($password), 'screenName' => $screenName, 'profileImage' => 'assets/images/defaultProfileImage.png', 'profileCover' => 'assets/images/defaultCoverImage.png'));
                     $_SESSION['user_id'] = $user_id;
                     header('Location: includes/signup.php?step=1');
                 }
             }
+
         }
     }
-
 ?>
-
-<div class="signup-div">
-    <form method="post">
-        <fieldset class="fieldset-auto-width">
-            <legend><h4>Sign Up</h4></legend>
-            <div>
-                <label for="name"></label>
-                <input type="text" name="screen_name" placeholder="Full Name">
-            </div>
-            <br>
-            <div>
-                <label for="email"></label>
-                <input type="email" name="email" placeholder="email address">
-            </div>
-            <br>
-            <div>
-                <label for="password"></label>
-                <input type="password" id="password" name="password" placeholder="password">
-            </div>
-            <br>
-            <input type="submit" name="signup" value="Sign Up">
-        </fieldset>
-    </form>
-    <?php
-        if (isset($error)) {
-            echo '<p style="color: red">'.$error.'</p>';
-        }
-    ?>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<form method="post">
+    <div class="signup-div">
+        <h3>Sign up </h3>
+        <ul>
+            <li>
+                <input type="text" name="screenName" placeholder="Full Name"/>
+            </li>
+            <li>
+                <input type="email" name="email" placeholder="Email"/>
+            </li>
+            <li>
+                <input type="password" name="password" placeholder="Password"/>
+            </li>
+            <li>
+                <input type="submit" name="signup" Value="Signup for Twitter">
+            </li>
+            <?php
+                if (isset($error)) {
+                    echo '<li class="error-li">
+                    <div class="span-fp-error">'.$error.'</div>
+                    </li>';
+                }
+            ?>
+        </ul>
+    </div>
+</form>
