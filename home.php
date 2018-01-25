@@ -6,7 +6,6 @@
         header('Location: index.php');
     }
 ?>
-
 <!DOCTYPE HTML>
 <html>
 <head>
