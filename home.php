@@ -20,6 +20,11 @@
             }
 
             $getFromU->create('tweets', array('status' => $status, 'tweetBy' => $user_id, 'tweetImage' => $tweetImage, 'postedOn' => date('Y-m-d H:i:s') ));
+            preg_match_all("/#+([a-zA-Z0-9_]+)/i", $status, $hashtag);
+            if (!empty($hashtag)) {
+                $getFromT->addTrend($status);
+            }
+            
         } else {
             $error = "Type or choose image to tweet";
         }
