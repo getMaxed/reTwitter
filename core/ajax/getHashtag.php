@@ -25,7 +25,7 @@
 	</div>
 	<div class="nav-right-down-right">
 		<div class="nav-right-down-right-headline">
-			<a>'.$mention->screenName.'</a><span class="getValue">@'.$mention->userName.'</span>
+			<a>'.$mention->screenName.'</a><span class="getValue">@'.$mention->username.'</span>
 		</div>
 	</div>
 </div><!--nav-right-down-inner end-here-->

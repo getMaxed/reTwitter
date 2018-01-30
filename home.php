@@ -24,7 +24,7 @@
             if (!empty($hashtag)) {
                 $getFromT->addTrend($status);
             }
-            
+
         } else {
             $error = "Type or choose image to tweet";
         }
