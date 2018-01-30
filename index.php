@@ -5,7 +5,7 @@
         header('Location: home.php');
     }
 ?>
-<html>
+<!DOCTYPE html>
 <head>
     <title>reTwitter</title>
     <meta charset="UTF-8" />
@@ -51,7 +51,7 @@
         <div class="main-container">
             <!-- content left-->
             <div class="content-left">
-                <h1>Welcome to Tweety.</h1>
+                <h1>reTweeter Welcomes You!.</h1>
                 <br/>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus semper, ipsum id eleifend malesuada, lectus nibh efficitur nisl, sed congue.</p>
             </div><!-- content left ends -->

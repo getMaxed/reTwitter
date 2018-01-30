@@ -47,7 +47,7 @@
     }
 
     ?>
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Profile edit page</title>
