@@ -3,7 +3,17 @@ $(function() {
         var tweet_id = $(this).data('tweet');
         $.post('http://coe.dev/123/projects/xxx/reTwitter/core/ajax/deleteTweet.php', {showPopup:tweet_id}, function (data) {
             $('.popupTweet').html(data);
-        })
+            $('.close-retweet-popup, .cancel-it').click(function () {
+                $('.retweet-popup').hide();
+            });
+
+            $(document).on('click', '.delete-it', function () {
+                $.post('http://coe.dev/123/projects/xxx/reTwitter/core/ajax/deleteTweet.php', {deleteTweet:tweet_id}, function () {
+                    $('.retweet-popup').hide();
+                    location.reload();
+                });
+            });
+        });
     });
 
     $(document).on('click', '.deleteComment', function () {
