@@ -122,7 +122,7 @@
                 </ul>
                 <div class="edit-button">
 		<span>
-			<button class="f-btn follow-btn"  data-follow="user_id" data-user="user_id"><i class="fa fa-user-plus"></i> Follow </button>
+            <?php $getFromF->followBtn($profileId, $user_id)?>
 		</span>
                 </div>
             </div>
@@ -363,6 +363,7 @@
                     <script type="text/javascript" src="<?=BASE_URL?>assets/js/fetch.js"></script>
                     <script type="text/javascript" src="<?=BASE_URL?>assets/js/search.js"></script>
                     <script type="text/javascript" src="<?=BASE_URL?>assets/js/hashtag.js"></script>
+                    <script type="text/javascript" src="<?=BASE_URL?>assets/js/follow.js"></script>
             </div>
             <!-- in center end -->
 
