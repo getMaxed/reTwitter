@@ -221,13 +221,13 @@
                     <div class="in-right-wrap">
 
                         <!--Who To Follow-->
-                        <!--WHO_TO_FOLLOW HERE-->
+                            <?php $getFromF->whoToFollow($user_id, $user_id)?>
                         <!--Who To Follow-->
 
                     </div><!-- in left wrap-->
 
                 </div><!-- in right end -->
-
+                <script src="assets/js/follow.js"></script>
             </div><!--in full wrap end-->
 
         </div><!-- in wrappper ends-->

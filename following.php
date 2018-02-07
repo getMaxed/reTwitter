@@ -8,16 +8,19 @@ if (isset($_GET['username']) === true && empty($_GET['username']) === false) {
     $user_id = $_SESSION['user_id'];
     $user = $getFromU->userData($user_id);
 
-    if (!$profileData) {
-        header('Location: index.php');
+    if ($getFromU->loggedIn() === false) {
+        header('Location: ' . BASE_URL . 'index.php');
     }
 
+    if (!$profileData) {
+        header('Location: ' . BASE_URL . 'index.php');
+    }
 }
 
 ?>
 <html>
 <head>
-    <title>twitter</title>
+    <title>People followed by <?=$profileData->screenName. ' (@'.$profileData->username.')'?></title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="<?=BASE_URL?>assets/css/style-complete.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css"/>
@@ -220,6 +223,7 @@ if (isset($_GET['username']) === true && empty($_GET['username']) === false) {
                                     </ul>
                                 </div>
                                 <!--whoToFollow-->
+                                <?php $getFromF->whoToFollow($user_id, $user_id)?>
                                 <!--Trends-->
                             </div>
 
@@ -240,7 +244,16 @@ if (isset($_GET['username']) === true && empty($_GET['username']) === false) {
                     <?php $getFromF->followingList($profileId, $user_id, $profileData->user_id)?>
                 </div><!-- wrap follo inner end-->
             </div><!--FOLLOWING OR FOLLOWER FULL WRAPPER END-->
-            <script type="text/javascript" src="<?=BASE_URL?>/assets/js/follow.js"></script>
+            <script type="text/javascript" src="<?=BASE_URL?>assets/js/follow.js"></script>
+            <script type="text/javascript" src="<?=BASE_URL?>assets/js/like.js"></script>
+            <script type="text/javascript" src="<?=BASE_URL?>assets/js/retweet.js"></script>
+            <script type="text/javascript" src="<?=BASE_URL?>assets/js/popuptweets.js"></script>
+            <script type="text/javascript" src="<?=BASE_URL?>assets/js/comment.js"></script>
+            <script type="text/javascript" src="<?=BASE_URL?>assets/js/popupForm.js"></script>
+            <script type="text/javascript" src="<?=BASE_URL?>assets/js/search.js"></script>
+            <script type="text/javascript" src="<?=BASE_URL?>assets/js/hashtag.js"></script>
+            <script type="text/javascript" src="<?=BASE_URL?>assets/js/follow.js"></script>
+
 
         </div><!--in full wrap end-->
     </div>
@@ -249,4 +262,3 @@ if (isset($_GET['username']) === true && empty($_GET['username']) === false) {
 </div><!-- ends wrapper -->
 </body>
 </html>
-
