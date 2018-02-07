@@ -1,10 +1,11 @@
 $(function () {
     $('.follow-btn').click(function () {
         var followID = $(this).data('follow');
+        var profile = $(this).data('profile');
         $button = $(this);
 
         if ($button.hasClass('following-btn')) {
-            $.post('http://coe.dev/123/projects/xxx/reTwitter/core/ajax/follow.php', {unfollow:followID}, function (data) {
+            $.post('http://coe.dev/123/projects/xxx/reTwitter/core/ajax/follow.php', {unfollow:followID,profile:profile}, function (data) {
                 data = JSON.parse(data);
                 $button.removeClass('following-btn');
                 $button.removeClass('unfollow-btn');
@@ -14,7 +15,7 @@ $(function () {
             });
 
         } else {
-            $.post('http://coe.dev/123/projects/xxx/reTwitter/core/ajax/follow.php', {follow:followID}, function (data) {
+            $.post('http://coe.dev/123/projects/xxx/reTwitter/core/ajax/follow.php', {follow:followID,profile:profile}, function (data) {
                 data = JSON.parse(data);
                 $button.removeClass('follow-btn');
                 $button.addClass('following-btn');

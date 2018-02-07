@@ -121,7 +121,7 @@ if (isset($_GET['username']) === true && empty($_GET['username']) === false) {
                 </ul>
                 <div class="edit-button">
 		<span>
-            <?php echo $getFromF->followBtn($profileId, $user_id)?>
+            <?php echo $getFromF->followBtn($profileId, $user_id, $profileData->user_id)?>
 		</span>
                 </div>
             </div>
@@ -237,7 +237,7 @@ if (isset($_GET['username']) === true && empty($_GET['username']) === false) {
             <!--FOLLOWING OR FOLLOWER FULL WRAPPER-->
             <div class="wrapper-following">
                 <div class="wrap-follow-inner">
-                    <?php $getFromF->followingList($profileId, $user_id)?>
+                    <?php $getFromF->followingList($profileId, $user_id, $profileData->user_id)?>
                 </div><!-- wrap follo inner end-->
             </div><!--FOLLOWING OR FOLLOWER FULL WRAPPER END-->
             <script type="text/javascript" src="<?=BASE_URL?>/assets/js/follow.js"></script>
