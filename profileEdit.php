@@ -453,6 +453,7 @@
             <script type="text/javascript" src="<?=BASE_URL?>assets/js/popupForm.js"></script>
             <script type="text/javascript" src="<?=BASE_URL?>assets/js/search.js"></script>
             <script type="text/javascript" src="<?=BASE_URL?>assets/js/hashtag.js"></script>
+            <script type="text/javascript" src="<?=BASE_URL?>assets/js/messages.js"></script>
 
     </div>
     <!-- in center end -->
