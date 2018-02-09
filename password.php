@@ -214,6 +214,9 @@
     </div>
     <!--RIGHTER ENDS-->
 </div>
+
+<div class="popupTweet"></div>
+    <script type="text/javascript" src="<?=BASE_URL?>assets/js/postMessage.js"></script>
 <!--CONTAINER_WRAP ENDS-->
 </div>
 <!-- ends wrapper -->

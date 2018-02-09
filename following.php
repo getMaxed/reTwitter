@@ -254,6 +254,7 @@ if (isset($_GET['username']) === true && empty($_GET['username']) === false) {
             <script type="text/javascript" src="<?=BASE_URL?>assets/js/hashtag.js"></script>
             <script type="text/javascript" src="<?=BASE_URL?>assets/js/follow.js"></script>
             <script type="text/javascript" src="<?=BASE_URL?>assets/js/messages.js"></script>
+            <script type="text/javascript" src="<?=BASE_URL?>assets/js/postMessage.js"></script>
 
 
         </div><!--in full wrap end-->

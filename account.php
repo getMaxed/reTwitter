@@ -200,6 +200,7 @@ Email
 			</div>
 		</div><!--RIGHTER ENDS-->
         <div class="popupTweet"></div>
+        <script type="text/javascript" src="<?=BASE_URL?>assets/js/postMessage.js"></script>
 
 	</div>
 	<!--CONTAINER_WRAP ENDS-->
