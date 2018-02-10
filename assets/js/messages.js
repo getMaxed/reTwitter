@@ -14,7 +14,7 @@ $(function () {
                 scrolldown();
             }
 
-            ('#chat').on('scroll', function () {
+            $('#chat').on('scroll', function () {
                 if ($(this).scrollTop() < this.scrollHeight - $(this).height()) {
                     autoscroll = false;
                 } else {
@@ -62,7 +62,24 @@ $(function () {
             $.post("http://coe.dev/123/projects/xxx/reTwitter/core/ajax/messages.php", {showMessage:getMessages}, function (data) {
                 $('.popupTweet').html(data);
                 clearInterval(timer);
-            })
+            });
+        });
+
+        $(document).on('click', '.deleteMsg', function () {
+            var messageID = $(this).data('message');
+            $('.message-del-inner').height('100px');
+
+            $(document).on('click', '.cancel', function () {
+                $('.message-del-inner').height('0px');
+            });
+
+            $(document).on('click', '.delete', function () {
+                $.post('http://coe.dev/123/projects/xxx/reTwitter/core/ajax/messages.php', {deleteMsg:messageID}, function (data) {
+                    $('.message-del-inner').height('0px');
+                    getMessages();
+                });
+            });
+
         });
 
     });
