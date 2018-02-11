@@ -9,13 +9,13 @@
         $accounts = $getFromT->getUsersByHash($hashtag);
 
     } else {
-        header('Location: index.php');
+        header('Location: '.BASE_URL.' index.php');
     }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>twitter</title>
+    <title><?='#'.$hashtag . ' hashtag on reTweeter'?></title>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="<?=BASE_URL?>assets/css/style-complete.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css"/>
@@ -107,20 +107,43 @@
 
         <?php if (strpos($_SERVER['REQUEST_URI'], '?f=photos')) :?>
             <!-- TWEETS IMAGES  -->
-            <!--  <div class="hash-img-wrapper">
+            <div class="hash-img-wrapper">
                  <div class="hash-img-inner">
-                     <div class="hash-img-flex">
-                         <img src="TWEET-IMAGE"/>
-                         <div class="hash-img-flex-footer">
-                             <ul>
-                                 <li><i class="fa fa-share" aria-hidden="true"></i></li>
-                                 <li><i class="fa fa-retweet" aria-hidden="true"></i></li>
-                                 <li><i class="fa fa-heart" aria-hidden="true"></i></li>
-                             </ul>
-                         </div>
-                    </div>
-                </div>
-            </div>  -->
+
+                 <?php
+                     foreach ($tweets as $tweet) {
+                         $likes = $getFromT->likes($user_id, $tweet->tweetID);
+                         $retweet = $getFromT->checkRetweet($tweet->tweetID, $user_id);
+                         $user = $getFromU->userData($tweet->retweetBy);
+                         if (!empty($tweet->tweetImage)) {
+                            echo '<div class="hash-img-flex">
+                                    <img src="'.BASE_URL.$tweet->tweetImage.'" class="imagePopup" data-tweet="'.$tweet->tweetID.'"/>
+                                    <div class="hash-img-flex-footer">
+                                        <ul>
+                                            '.(($getFromU->loggedIn() === true) ? '    
+			
+				<li><button><a href="#"><i class="fa fa-share" aria-hidden="true"></i></a></button></li>
+				<li>'.(($tweet->tweetID === $retweet['retweetID'] OR $user_id === $retweet['retweetBy']) ? '<button class="retweeted" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCount">'.$tweet->retweetCount.'</span></button>' : '<button class="retweet" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCount">'.(($tweet->retweetCount > 0) ? $tweet->retweetCount : '').'</span></button>').'</li>
+				<li>'.(($likes['likeOn'] === $tweet->tweetID) ? '<button class="unlike-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-heart" aria-hidden="true"></i><span class="likesCounter">'.$tweet->likesCount.'</span></button>' : '<button class="like-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-heart-o" aria-hidden="true"></i><span class="likesCounter">'.(($tweet->likesCount > 0) ? $tweet->likesCount : '').'</span></button>').'</li>
+				'.(($tweet->tweetBy === $user_id) ? '   	
+					<li>
+					<a href="#" class="more"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+					<ul>
+					  <li><label class="deleteTweet" data-tweet="'.$tweet->tweetID.'">Delete Tweet</label></li>
+					</ul>
+				</li>' : '').' 
+				' : '<li><button><a href="#"><i class="fa fa-share" aria-hidden="true"></i></a></button></li>
+                     <li><button><a href="#"><i class="fa fa-retweet" aria-hidden="true"></i></a></button></li>
+                     <li><button><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></button></li>
+                     ').'
+                                        </ul>
+                                    </div>
+                                </div>';
+                         }
+                     }
+                 ?>
+                 </div>
+            </div>
             <!-- TWEETS IMAGES -->
 
         <?php elseif (strpos($_SERVER['REQUEST_URI'], '?f=users')) :?>
@@ -284,7 +307,19 @@
                 </div>
             </div>
         <?php endif; ?>
-
+            <div class="popupTweet"></div>
+                <script type="text/javascript" src="<?=BASE_URL?>assets/js/like.js"></script>
+                <script type="text/javascript" src="<?=BASE_URL?>assets/js/retweet.js"></script>
+                <script type="text/javascript" src="<?=BASE_URL?>assets/js/popuptweets.js"></script>
+                <script type="text/javascript" src="<?=BASE_URL?>assets/js/delete.js"></script>
+                <script type="text/javascript" src="<?=BASE_URL?>assets/js/comment.js"></script>
+                <script type="text/javascript" src="<?=BASE_URL?>assets/js/popupForm.js"></script>
+                <script type="text/javascript" src="<?=BASE_URL?>assets/js/fetch.js"></script>
+                <script type="text/javascript" src="<?=BASE_URL?>assets/js/search.js"></script>
+                <script type="text/javascript" src="<?=BASE_URL?>assets/js/hashtag.js"></script>
+                <script type="text/javascript" src="<?=BASE_URL?>assets/js/messages.js"></script>
+                <script type="text/javascript" src="<?=BASE_URL?>assets/js/postMessage.js"></script>
+            </div>
         </div><!--in full wrap end-->
     </div><!-- in wrappper ends-->
 

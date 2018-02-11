@@ -365,7 +365,7 @@
                     <script type="text/javascript" src="<?=BASE_URL?>assets/js/hashtag.js"></script>
                     <script type="text/javascript" src="<?=BASE_URL?>assets/js/messages.js"></script>
                     <script type="text/javascript" src="<?=BASE_URL?>assets/js/postMessage.js"></script>
-            </div>
+                </div>
             <!-- in center end -->
 
             <div class="in-right">
@@ -376,7 +376,7 @@
                     <!--==WHO TO FOLLOW==-->
 
                     <!--==TRENDS==-->
-                    <!--Trends-->
+                        <?php $getFromT->trends() ?>
                     <!--==TRENDS==-->
 
                 </div><!-- in right wrap-->
