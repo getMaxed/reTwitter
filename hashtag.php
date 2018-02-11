@@ -6,6 +6,7 @@
         $user_id = $_SESSION['user_id'];
         $user = $getFromU->userData($user_id);
         $tweets = $getFromT->getTweetsByHash($hashtag);
+        $accounts = $getFromT->getUsersByHash($hashtag);
 
     } else {
         header('Location: index.php');
@@ -104,6 +105,7 @@
             </div>
             <!-- in left end-->
 
+        <?php if (strpos($_SERVER['REQUEST_URI'], '?f=photos')) :?>
             <!-- TWEETS IMAGES  -->
             <!--  <div class="hash-img-wrapper">
                  <div class="hash-img-inner">
@@ -121,40 +123,45 @@
             </div>  -->
             <!-- TWEETS IMAGES -->
 
+        <?php elseif (strpos($_SERVER['REQUEST_URI'], '?f=users')) :?>
+
             <!--TWEETS ACCOUTS-->
-            <!-- <div class="wrapper-following">
+        <div class="wrapper-following">
             <div class="wrap-follow-inner">
 
+        <?php foreach ($accounts as $users) :?>
              <div class="follow-unfollow-box">
                 <div class="follow-unfollow-inner">
                     <div class="follow-background">
-                        <img src="PROFILE-COVER"/>
+                        <img src="<?=BASE_URL.$users->profileCover?>"/>
                     </div>
                     <div class="follow-person-button-img">
                         <div class="follow-person-img">
-                             <img src="PROFILE-IMAGE"/>
+                             <img src="<?=BASE_URL.$users->profileImage?>"/>
                         </div>
                         <div class="follow-person-button">
-                           PROFILE-BUTTON
+                           <?=$getFromF->followBtn($users->user_id, $user_id, $user_id)?>
                         </div>
                     </div>
                     <div class="follow-person-bio">
                         <div class="follow-person-name">
-                            <a href="#">SCREEN-NAME</a>
+                            <a href="<?=BASE_URL.$users->username?>"><?=$users->screenName?></a>
                         </div>
                         <div class="follow-person-tname">
-                            <a href="#">@USERNAME</a>
+                            <a href="<?=BASE_URL.$users->username?>">@<?=$users->username?></a>
                         </div>
                         <div class="follow-person-dis">
-                            PROFILE-BIO
+                            <?=$getFromT->getTweetLinks($users->bio)?>
                         </div>
                     </div>
                 </div>
             </div>
 
+        <?php endforeach; ?>
             </div>
-            </div> -->
+        </div>
             <!-- TWEETS ACCOUNTS -->
+        <?php else :?>
 
             <div class="in-center">
                 <div class="in-center-wrap">
@@ -276,7 +283,7 @@
                     ?>
                 </div>
             </div>
-
+        <?php endif; ?>
 
         </div><!--in full wrap end-->
     </div><!-- in wrappper ends-->
