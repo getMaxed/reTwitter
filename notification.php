@@ -2,7 +2,9 @@
 include 'core/init.php';
 $user_id = $_SESSION['user_id'];
 $user = $getFromU->userData($user_id);
+$getFromM->notificationViewed($user_id);
 $notify = $getFromM->getNotificationCount($user_id);
+$notification = $getFromM->notification($user_id);
 if ($getFromU->loggedIn() === false) {
     header('Location: index.php');
 }
@@ -176,6 +178,8 @@ if (isset($_POST['tweet'])) {
                                 </div>
                             </div>
 
+                            <?php foreach($notification as $data) :?>
+                                <?php if ($data->type === 'follow') :?>
                             <!-- Follow Notification -->
                             <!--NOTIFICATION WRAPPER-->
                             <div class="notification-wrapper">
@@ -189,12 +193,12 @@ if (isset($_POST['tweet'])) {
                                         </div>
                                         <div class="notification-name">
                                             <div>
-                                                <img src="TWEET-IMAGE"/>
+                                                <img src="<?=BASE_URL.$data->profileImage?>"/>
                                             </div>
 
                                         </div>
                                         <div class="notification-tweet">
-                                            <a href="" class="notifi-name">SCREEN-NAME</a><span> Followed you your - <span>TIME</span>
+                                            <a href="<?=BASE_URL.$data->username?>" class="notifi-name"><?=$data->screenName?></a><span> Followed you your - <span><?=$getFromU->timeAgo($data->time)?></span>
 
                                         </div>
 
@@ -205,7 +209,9 @@ if (isset($_POST['tweet'])) {
                             </div>
                             <!--NOTIFICATION WRAPPER END-->
                             <!-- Follow Notification -->
+                            <?php endif; ?>
 
+                                <?php if ($data->type === 'like') :?>
 
                             <!-- Like Notification -->
                             <!--NOTIFICATION WRAPPER-->
@@ -219,28 +225,30 @@ if (isset($_POST['tweet'])) {
                                         </div>
                                         <div class="notification-name">
                                             <div>
-                                                <img src="PROFILE-IMAGE"/>
+                                                <img src="<?=BASE_URL.$data->profileImage?>"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="notification-tweet">
-                                        <a href="" class="notifi-name">SCREEN-NAME</a><span> liked your TWEET - <span>TIME</span>
+                                        <a href="<?=BASE_URL.$data->username?>" class="notifi-name"><?=$data->screenName?></a><span> liked your <?php if ($data->tweetBy == $user_id) {echo 'Tweet';} else {echo 'Retweet';}?> - <span><?=$getFromU->timeAgo($data->time)?></span>
                                     </div>
                                     <div class="notification-footer">
                                         <div class="noti-footer-inner">
                                             <div class="noti-footer-inner-left">
                                                 <div class="t-h-c-name">
-                                                    <span><a href="PROFILE-LINK">SCREEN-NAME</a></span>
-                                                    <span>@USERNAME</span>
-                                                    <span>TWEET-TIME</span>
+                                                    <span><a href="<?=BASE_URL.$data->username?>"><?=$data->screenName?></a></span>
+                                                    <span>@<?=$data->username?></span>
+                                                    <span><?=$getFromU->timeAgo($data->postedOn)?></span>
                                                 </div>
                                                 <div class="noti-footer-inner-right-text">
-                                                    STATUS
+                                                    <?=$getFromT->getTweetLinks($data->status)?>
                                                 </div>
                                             </div>
+                                            <?php if (!empty($data->tweetImage)) :?>
                                             <div class="noti-footer-inner-right">
-                                                <img src="TWEET-IMAGE"/>
+                                                <img src="<?=BASE_URL.$data->tweetImage?>"/>
                                             </div>
+                                            <?php endif;?>
 
                                         </div><!--END NOTIFICATION-inner-->
                                     </div>
@@ -248,6 +256,9 @@ if (isset($_POST['tweet'])) {
                             </div>
                             <!--NOTIFICATION WRAPPER END-->
                             <!-- Like Notification -->
+                            <?php endif; ?>
+
+                            <?php if ($data->type === 'retweet') :?>
 
 
                             <!-- Retweet Notification -->
@@ -262,26 +273,28 @@ if (isset($_POST['tweet'])) {
                                             </span>
                                         </div>
                                         <div class="notification-tweet">
-                                            <a href="" class="notifi-name">SCREEN-NAME</a><span> retweet your TWEET - <span>TIME</span>
+                                            <a href="<?=BASE_URL.$data->username?>" class="notifi-name"><?=$data->screenName?></a><span> retweet your <?php if ($data->tweetBy == $user_id) {echo 'Tweet';} else {echo 'Retweet';}?> - <span><?=$getFromU->timeAgo($data->time)?></span>
                                         </div>
                                         <div class="notification-footer">
                                             <div class="noti-footer-inner">
 
                                                 <div class="noti-footer-inner-left">
                                                     <div class="t-h-c-name">
-                                                        <span><a href="PROFILE-LINK">SCREEN-NAME</a></span>
-                                                        <span>@USERNAME</span>
-                                                        <span>TWEET-TIME</span>
+                                                        <span><a href="<?=BASE_URL.$data->username?>">SCREEN-NAME<?=$data->screenName?></a></span>
+                                                        <span>@<?=$data->username?></span>
+                                                        <span><?=$getFromU->timeAgo($data->postedOn)?></span>
                                                     </div>
                                                     <div class="noti-footer-inner-right-text">
-                                                        STATUS
+                                                        <?=$getFromT->getTweetLinks($data->status)?>
                                                     </div>
                                                 </div>
 
 
-                                                <div class="noti-footer-inner-right">
-                                                    <img src="TWEET-IMAGE"/>
-                                                </div>
+                                                <?php if (!empty($data->tweetImage)) :?>
+                                                    <div class="noti-footer-inner-right">
+                                                        <img src="<?=BASE_URL.$data->tweetImage?>"/>
+                                                    </div>
+                                                <?php endif;?>
 
                                             </div><!--END NOTIFICATION-inner-->
                                         </div>
@@ -290,7 +303,74 @@ if (isset($_POST['tweet'])) {
                             </div>
                             <!--NOTIFICATION WRAPPER END-->
                             <!-- Retweet Notification -->
+                            <?php endif;?>
+                            <?php if ($data->type === 'mention') :?>
+                                <?php
+                                    $tweet = $data;
+                                    $likes = $getFromT->likes($user_id, $tweet->tweetID);
+                                    $retweet = $getFromT->checkRetweet($tweet->tweetID, $user_id);
+                                    echo '<div class="all-tweet-inner">
+                                     <div class="t-show-wrap">	
+                                         <div class="t-show-inner">
+                                            <div class="t-show-popup" data-tweet="'.$tweet->tweetID.'">
+                                                <div class="t-show-head">
+                                                    <div class="t-show-img">
+                                                        <img src="'.BASE_URL.$tweet->profileImage.'"/>
+                                                    </div>
+                                                    <div class="t-s-head-content">
+                                                        <div class="t-h-c-name">
+                                                            <span><a href="'.$tweet->username.'">'.$tweet->screenName.'</a></span>
+                                                            <span>@'.$tweet->username.'</span>
+                                                            <span>'.$getFromU->timeAgo($tweet->postedOn).'</span>
+                                                        </div>
+                                                        <div class="t-h-c-dis">
+                                                            '.$getFromT->getTweetLinks($tweet->status).'
+                                                        </div>
+                                                    </div>
+                                                </div>'.
 
+                                            ((!empty($tweet->tweetImage)) ?
+                                                '
+                                            <div class="t-show-body">
+                                              <div class="t-s-b-inner">
+                                               <div class="t-s-b-inner-in">
+                                                 <img src="'.BASE_URL.$tweet->tweetImage.'" class="imagePopup" data-tweet="'.$tweet->tweetID.'"/>
+                                               </div>
+                                           </div>
+                                         </div>
+                                <!--tweet show body end-->
+		' : '').'
+
+	 </div>
+	<div class="t-show-footer">
+		<div class="t-s-f-right">
+			<ul>
+			
+			'.(($getFromU->loggedIn() === true) ? '    
+			
+				<li><button><a href="#"><i class="fa fa-share" aria-hidden="true"></i></a></button></li>
+				<li>'.(($tweet->tweetID === $retweet['retweetID'] OR $user_id === $retweet['retweetBy']) ? '<button class="retweeted" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCount">'.$tweet->retweetCount.'</span></button>' : '<button class="retweet" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-retweet" aria-hidden="true"></i><span class="retweetsCount">'.(($tweet->retweetCount > 0) ? $tweet->retweetCount : '').'</span></button>').'</li>
+				<li>'.(($likes['likeOn'] === $tweet->tweetID) ? '<button class="unlike-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-heart" aria-hidden="true"></i><span class="likesCounter">'.$tweet->likesCount.'</span></button>' : '<button class="like-btn" data-tweet="'.$tweet->tweetID.'" data-user="'.$tweet->tweetBy.'"><i class="fa fa-heart-o" aria-hidden="true"></i><span class="likesCounter">'.(($tweet->likesCount > 0) ? $tweet->likesCount : '').'</span></button>').'</li>
+				'.(($tweet->tweetBy === $user_id) ? '   	
+					<li>
+					<a href="#" class="more"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+					<ul>
+					  <li><label class="deleteTweet" data-tweet="'.$tweet->tweetID.'">Delete Tweet</label></li>
+					</ul>
+				</li>' : '').' 
+				' : '<li><button><a href="#"><i class="fa fa-share" aria-hidden="true"></i></a></button></li>
+                     <li><button><a href="#"><i class="fa fa-retweet" aria-hidden="true"></i></a></button></li>
+                     <li><button><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></button></li>
+                     ').'
+			</ul>
+		</div>
+	</div>
+</div>
+</div>
+</div>';
+                                ?>
+                            <?php endif;?>
+                            <?php endforeach;?>
                         </div>
                         <!--NOTIFICATION WRAPPER FULL WRAPPER END-->
 
