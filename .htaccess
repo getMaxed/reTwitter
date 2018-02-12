@@ -6,3 +6,4 @@ RewriteRule ^hashtag/([a-zA-Z0-9_-]+)/?$ hashtag.php?hashtag=$1 [QSA]
 RewriteRule ^settings/account/?$ account.php
 RewriteRule ^settings/password/?$ password.php
 RewriteRule ^([a-zA-Z0-9_-]+)/(following|followers)?$ $2.php?username=$1 [QSA]
+RewriteRule ^i/notifications/?$ notification.php
