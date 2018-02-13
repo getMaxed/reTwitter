@@ -236,8 +236,8 @@ if (isset($_POST['tweet'])) {
                                         <div class="noti-footer-inner">
                                             <div class="noti-footer-inner-left">
                                                 <div class="t-h-c-name">
-                                                    <span><a href="<?=BASE_URL.$data->username?>"><?=$data->screenName?></a></span>
-                                                    <span>@<?=$data->username?></span>
+                                                    <span><a href="<?=BASE_URL.$user->username?>"><?=$user->screenName?></a></span>
+                                                    <span>@<?=$user->username?></span>
                                                     <span><?=$getFromU->timeAgo($data->postedOn)?></span>
                                                 </div>
                                                 <div class="noti-footer-inner-right-text">
@@ -280,8 +280,8 @@ if (isset($_POST['tweet'])) {
 
                                                 <div class="noti-footer-inner-left">
                                                     <div class="t-h-c-name">
-                                                        <span><a href="<?=BASE_URL.$data->username?>">SCREEN-NAME<?=$data->screenName?></a></span>
-                                                        <span>@<?=$data->username?></span>
+                                                        <span><a href="<?=BASE_URL.$user->username?>">SCREEN-NAME<?=$user->screenName?></a></span>
+                                                        <span>@<?=$user->username?></span>
                                                         <span><?=$getFromU->timeAgo($data->postedOn)?></span>
                                                     </div>
                                                     <div class="noti-footer-inner-right-text">
