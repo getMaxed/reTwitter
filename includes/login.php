@@ -1,5 +1,9 @@
 <?php
-    if (isset($_POST['login']) && !empty($_POST['login'])) {
+if ($_SERVER['REQUEST_METHOD'] === "GET" && realpath(__FILE__) === realpath($_SERVER['SCRIPT_FILENAME'])) {
+    header('Location: ../index.php');
+}
+
+if (isset($_POST['login']) && !empty($_POST['login'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
